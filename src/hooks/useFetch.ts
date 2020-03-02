@@ -29,7 +29,7 @@ export function useFetch(url: string) {
          setError(error.response.data)
          console.error(error)
       })
-   }, [isLoading])
+   }, [isLoading, options, url])
 
    return [{ isLoading, response, error }, doFetch]
 }

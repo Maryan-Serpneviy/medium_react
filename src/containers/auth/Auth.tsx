@@ -17,7 +17,7 @@ export default function Auth(props) {
    const [password, setPassword] = useState<string>('')
    const [username, setUsername] = useState<string>('')
    const [submitted, setSubmitted] = useState<boolean>(false)
-   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
+   const [{ isLoading, response }, doFetch] = useFetch(apiUrl)
    const [token, setToken] = useLocalStorage<string>('medium-token')
 
    const handleSubmit = (event: React.FormEvent) => {
@@ -34,10 +34,9 @@ export default function Auth(props) {
       if (!response) {
          return
       }
-
       setToken(response.user.token)
       setSubmitted(true)
-   }, [response])
+   }, [response, setToken])
 
    if (submitted) {
       return <Redirect to="/" />
