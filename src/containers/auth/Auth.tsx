@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Redirect, Link } from 'react-router-dom'
 import { useFetch } from '@/hooks/useFetch'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
 import Input from '@com/Input'
 import Button from '@com/Button'
 import classes from './Auth.module.scss'
@@ -15,7 +16,9 @@ export default function Auth(props) {
    const [email, setEmail] = useState<string>('')
    const [password, setPassword] = useState<string>('')
    const [username, setUsername] = useState<string>('')
+   const [submitted, setSubmitted] = useState<boolean>(false)
    const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
+   const [token, setToken] = useLocalStorage<string>('medium-token')
 
    const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault()
@@ -25,6 +28,19 @@ export default function Auth(props) {
          method: 'POST',
          data: { user }
       })
+   }
+
+   useEffect(() => {
+      if (!response) {
+         return
+      }
+
+      setToken(response.user.token)
+      setSubmitted(true)
+   }, [response])
+
+   if (submitted) {
+      return <Redirect to="/" />
    }
 
    return (
