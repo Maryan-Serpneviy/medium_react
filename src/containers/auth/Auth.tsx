@@ -5,21 +5,25 @@ import Input from '@com/Input'
 import Button from '@com/Button'
 import classes from './Auth.module.scss'
 
-export default function Auth() {
+export default function Auth(props) {
+   const isLogin = props.match.path === '/login'
+   const pageTitle = isLogin ? 'Sign in' : 'Sign up'
+   const descriptionLink = isLogin ? '/register' : '/login'
+   const descriptionText = isLogin ? 'Need an account?' : 'Have an account?'
+   const apiUrl = isLogin ? 'users/login' : 'users'
+
    const [email, setEmail] = useState<string>('')
    const [password, setPassword] = useState<string>('')
-   const [{ isLoading, response, error }, doFetch] = useFetch('users/login')
+   const [username, setUsername] = useState<string>('')
+   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
 
    const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault()
+
+      const user = isLogin ? { email, password } : { email, password, username }
       doFetch({
          method: 'POST',
-         data: {
-            user: {
-               email,
-               password
-            }
-         }
+         data: { user }
       })
    }
 
@@ -28,12 +32,24 @@ export default function Auth() {
          <div className="container page">
             <div className="row">
                <div className="col md-6 col-xs-12">
-               <h1 className="text-center">Login</h1>
+               <h1 className="text-center">{pageTitle}</h1>
                   <p className="text-sm-center">
-                     <Link to="/register">Need an account?</Link>
+                     <Link to={descriptionLink}>{descriptionText}</Link>
                   </p>
                   <form onSubmit={handleSubmit}>
                      <fieldset style={{ margin: '0 auto', width: 400 }}>
+                        {!isLogin && (
+                           <fieldset className="form-group">
+                              <Input
+                                 value={username}
+                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                                 className="form-control form-control-lg"
+                                 type="text"
+                                 placeholder="Username"
+                              />
+                           </fieldset>
+                        )}
+
                         <fieldset className="form-group">
                            <Input
                               value={email}
@@ -53,11 +69,12 @@ export default function Auth() {
                               placeholder="Password"
                            />
                         </fieldset>
+
                         <Button
                            className="btn btn-lg btn-primary pull-xs-right"
                            disabled={isLoading}
                         >
-                           Sign in
+                           {pageTitle}
                         </Button>
                      </fieldset>
                   </form>

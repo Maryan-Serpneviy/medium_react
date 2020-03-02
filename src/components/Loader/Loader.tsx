@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './LoaderSm.module.scss'
+import classes from './Loader.module.scss'
 
 export default function LoaderSm() {
    return (

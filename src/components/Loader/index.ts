@@ -1,2 +1,2 @@
-import LoaderSm from './Loader'
-export default LoaderSm
+import Loader from './Loader'
+export default Loader
