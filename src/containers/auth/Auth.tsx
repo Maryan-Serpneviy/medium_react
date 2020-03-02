@@ -1,12 +1,27 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useFetch } from '@/hooks/useFetch'
 import Input from '@com/Input'
 import Button from '@com/Button'
 import classes from './Auth.module.scss'
 
 export default function Auth() {
-   const [email, setEmail] = useState('')
-   const [password, setPassword] = useState('')
+   const [email, setEmail] = useState<string>('')
+   const [password, setPassword] = useState<string>('')
+   const [{ isLoading, response, error }, doFetch] = useFetch('users/login')
+
+   const handleSubmit = (event: React.FormEvent) => {
+      event.preventDefault()
+      doFetch({
+         method: 'POST',
+         data: {
+            user: {
+               email,
+               password
+            }
+         }
+      })
+   }
 
    return (
       <div className={classes.auth}>
@@ -17,7 +32,7 @@ export default function Auth() {
                   <p className="text-sm-center">
                      <Link to="/register">Need an account?</Link>
                   </p>
-                  <form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
+                  <form onSubmit={handleSubmit}>
                      <fieldset style={{ margin: '0 auto', width: 400 }}>
                         <fieldset className="form-group">
                            <Input
@@ -40,6 +55,7 @@ export default function Auth() {
                         </fieldset>
                         <Button
                            className="btn btn-lg btn-primary pull-xs-right"
+                           disabled={isLoading}
                         >
                            Sign in
                         </Button>

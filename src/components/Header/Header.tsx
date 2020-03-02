@@ -14,6 +14,7 @@ export default function Header() {
             <NavLink to="/" className='navbar-brand' style={{ ...linkStyles }}>
                Medium
             </NavLink>
+            
             <ul className="nav navbar-nav pull-xs-right">
                <li className="nav-item">
                   <NavLink to="/" className="nav-link" exact>

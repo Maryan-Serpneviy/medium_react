@@ -1,22 +1,12 @@
 import React from 'react'
-import classes from './Loader.module.scss'
+import classes from './LoaderSm.module.scss'
 
-export default function Loader() {
-   const { loader, wrapper, square } = classes
-
-   const loaderCols = []
-   for (let i = 0; i < 4; i++) {
-      loaderCols.push(
-         <div className={square} key={i}>
-            <span/><span/><span/>
-         </div>
-      )
-   }
-
+export default function LoaderSm() {
    return (
-      <div className={loader}>
-         <div className={wrapper}>
-            {loaderCols}
+      <div className={classes.wrapper}>
+         <div className={classes.loader}>
+            <div/>
+            <div/>
          </div>
       </div>
    )

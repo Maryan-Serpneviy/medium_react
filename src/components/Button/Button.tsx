@@ -15,10 +15,13 @@ const Button: React.FC<Props> = (
    : InferProps<typeof Button.propTypes>) => {
 
    let style = [classes.button]
-   if (type) {
+   if (disabled) {
+      style.push(classes.disabled)
+   }
+   if (type && !disabled) {
       style.push(type)
    }
-   if (className) {
+   if (className && !disabled) {
       style = [...style, ...className.split(' ')]
    }
 
