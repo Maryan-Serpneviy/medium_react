@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { useFetch } from '@/hooks/useFetch'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { CurrentUserContext, CurrentUserStateType } from '@/context/currentUser'
+import { TOKEN_KEY } from '@/constants'
 import BackendErrorMessages from '@com/BackendErrorMessages'
 import Input from '@com/Input'
 import Button from '@com/Button'
@@ -26,7 +27,7 @@ export default function Auth(props: Props) {
    const [username, setUsername] = useState<string>('')
    const [submitted, setSubmitted] = useState<boolean>(false)
    const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
-   const [token, setToken] = useLocalStorage<string>('medium-token')
+   const [, setToken] = useLocalStorage<string>(TOKEN_KEY)
    const [currentUserState, setCurrentUserState] = useContext(CurrentUserContext)
 
    const handleSubmit = (event: React.FormEvent) => {

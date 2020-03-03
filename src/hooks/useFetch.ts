@@ -1,6 +1,8 @@
 /* eslint-disable no-shadow */
-import { useState, useEffect } from 'react'
 import Axios from 'axios'
+import { useState, useEffect } from 'react'
+import { useLocalStorage } from './useLocalStorage'
+import { TOKEN_KEY } from '@/constants'
 
 const BASE_URL = 'https://conduit.productionready.io/api/'
 
@@ -9,6 +11,7 @@ export function useFetch(url: string) {
    const [response, setResponse] = useState<null | object>(null)
    const [error, setError] = useState<null | object>(null)
    const [options, setOptions] = useState<object>({})
+   const [token] = useLocalStorage(TOKEN_KEY)
 
    const doFetch = (options: object = {}) => {
       setOptions(options)
@@ -16,10 +19,18 @@ export function useFetch(url: string) {
    }
 
    useEffect(() => {
+      const requestOptions = {
+         ...options,
+         ...{
+            headers: {
+               authorization: token ? `Token ${token}` : ''
+            }
+         }
+      }
       if (!isLoading) {
          return
       }
-      Axios(BASE_URL + url, options)
+      Axios(BASE_URL + url, requestOptions)
       .then(response => {
          setIsLoading(false)
          setResponse(response.data)
