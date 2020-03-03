@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { useFetch } from '@/hooks/useFetch'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { CurrentUserContext, CurrentUserStateType } from '@/context/currentUser'
 import Input from '@com/Input'
 import Button from '@com/Button'
 import classes from './Auth.module.scss'
 
-export default function Auth(props) {
+type Props = {
+   match: {
+      path: string
+   }
+}
+
+export default function Auth(props: Props) {
    const isLogin = props.match.path === '/login'
    const pageTitle = isLogin ? 'Sign in' : 'Sign up'
    const descriptionLink = isLogin ? '/register' : '/login'
@@ -19,6 +26,7 @@ export default function Auth(props) {
    const [submitted, setSubmitted] = useState<boolean>(false)
    const [{ isLoading, response }, doFetch] = useFetch(apiUrl)
    const [token, setToken] = useLocalStorage<string>('medium-token')
+   const [currentUserState, setCurrentUserState] = useContext(CurrentUserContext)
 
    const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault()
@@ -36,6 +44,12 @@ export default function Auth(props) {
       }
       setToken(response.user.token)
       setSubmitted(true)
+      setCurrentUserState((state: CurrentUserStateType) => ({
+         ...state,
+         isLogggedIn: true,
+         isLoading: false,
+         currentUser: response.user
+      }))
    }, [response, setToken])
 
    if (submitted) {
