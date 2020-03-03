@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { useFetch } from '@/hooks/useFetch'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { CurrentUserContext, CurrentUserStateType } from '@/context/currentUser'
+import BackendErrorMessages from '@com/BackendErrorMessages'
 import Input from '@com/Input'
 import Button from '@com/Button'
 import classes from './Auth.module.scss'
@@ -24,7 +25,7 @@ export default function Auth(props: Props) {
    const [password, setPassword] = useState<string>('')
    const [username, setUsername] = useState<string>('')
    const [submitted, setSubmitted] = useState<boolean>(false)
-   const [{ isLoading, response }, doFetch] = useFetch(apiUrl)
+   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
    const [token, setToken] = useLocalStorage<string>('medium-token')
    const [currentUserState, setCurrentUserState] = useContext(CurrentUserContext)
 
@@ -67,6 +68,7 @@ export default function Auth(props: Props) {
                   </p>
                   <form onSubmit={handleSubmit}>
                      <fieldset style={{ margin: '0 auto', width: 400 }}>
+                        {error && <BackendErrorMessages backendErrors={error.errors} />}
                         {!isLogin && (
                            <fieldset className="form-group">
                               <Input

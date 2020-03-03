@@ -1,0 +1,6 @@
+@import "../../assets/scss/utils/variables";
+
+.errors {
+   padding: 0 40px;
+   color: darken($danger-color, 25);
+}
