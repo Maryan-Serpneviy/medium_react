@@ -52,7 +52,7 @@ export default function Auth(props: Props) {
          isLoading: false,
          currentUser: response.user
       }))
-   }, [response, setToken])
+   }, [response, setToken, setCurrentUserState])
 
    if (submitted) {
       return <Redirect to="/" />

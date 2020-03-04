@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import Axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useLocalStorage } from './useLocalStorage'
 import { TOKEN_KEY } from '@/constants'
 
@@ -13,10 +13,10 @@ export function useFetch(url: string) {
    const [options, setOptions] = useState<object>({})
    const [token] = useLocalStorage(TOKEN_KEY)
 
-   const doFetch = (options: object = {}) => {
+   const doFetch = useCallback((options: object = {}) => {
       setOptions(options)
       setIsLoading(true)
-   }
+   }, [])
 
    useEffect(() => {
       const requestOptions = {
@@ -40,7 +40,7 @@ export function useFetch(url: string) {
          setError(error.response.data)
          console.error(error)
       })
-   }, [isLoading, options, url])
+   }, [isLoading, options, token, url])
 
    return [{ isLoading, response, error }, doFetch]
 }

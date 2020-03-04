@@ -28,7 +28,7 @@ export default function CurrentUserChecker({ children }: Props) {
          ...state,
          isLoading: true
       }))
-   }, [token, setCurrentUserState])
+   }, [token, setCurrentUserState, doFetch])
 
    useEffect(() => {
       if (!response) {
