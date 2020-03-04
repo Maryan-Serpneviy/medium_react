@@ -1,0 +1,11 @@
+@import "../../assets/scss/utils/variables";
+
+.feed {
+   a {
+      color: $theme-color;
+
+      &:hover {
+         color: darken($theme-color, 10);
+      }
+   }
+}

@@ -1,3 +1,5 @@
+@import "../../assets/scss/utils/variables";
+
 $size: 80px;
 
 .wrapper {
@@ -14,12 +16,13 @@ $size: 80px;
 .loader {
    display: block;
    position: relative;
+   top: 100px;
    width: $size;
    height: $size;
 
    div {
       position: absolute;
-      border: 4px solid #fff;
+      border: 4px solid $theme-color;
       opacity: 1;
       border-radius: 50%;
       animation: ripple .9s cubic-bezier(0, 0.2, 0.8, 1) infinite;
