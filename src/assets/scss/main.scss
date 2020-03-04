@@ -35,3 +35,9 @@ body {
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.page-item.active .page-link {
+	background-color: $theme-color;
+	border-color: $theme-color;
+	text-decoration: none;
+}

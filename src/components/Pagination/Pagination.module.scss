@@ -1,0 +1,12 @@
+@import "../../assets/scss/utils/variables";
+
+.pagination {
+   a {
+      color: $theme-color;
+
+      &:hover {
+         color: darken($theme-color, 10);
+         text-decoration: underline;
+      }
+   }
+}

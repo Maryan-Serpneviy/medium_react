@@ -1,15 +1,33 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { stringify } from 'query-string'
 import { useFetch } from '@/hooks/useFetch'
-import Feed from '@com/Feed'
+import { getPaginator } from '@/utils'
+import { LIMIT } from '@/constants'
 import Loader from '@com/Loader'
+import Feed from '@com/Feed'
+import Pagination from '@com/Pagination'
 
-export default function GlobalFeed() {
-   const apiUrl = 'articles?limit=10&offset=0'
+type Props = {
+   location: {
+      search: string
+   }
+   match: {
+      url: string
+   }
+}
+
+const GlobalFeed: React.FC<Props> = ({ location, match }) => {
+   const { offset, currentPage } = getPaginator(location.search)
+   const stringifiedParams = stringify({
+      LIMIT, offset
+   })
+   const apiUrl = `articles?${stringifiedParams}`
    const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
    
    useEffect(() => {
       doFetch()
-   }, [doFetch])
+   }, [doFetch, currentPage])
 
    return (
       <div className="home-page">
@@ -25,7 +43,15 @@ export default function GlobalFeed() {
                   {isLoading && <Loader />}
                   {error && <div>Something went wrong</div>}
                   {!isLoading && response && (
-                     <Feed articles={response.articles} />
+                     <>
+                        <Feed articles={response.articles} />
+                        <Pagination
+                           total={response.articlesCount}
+                           limit={LIMIT}
+                           current={currentPage}
+                           url={match.url}
+                        />
+                     </>
                   )}
                </div>
                <div className="col-md-3">
@@ -36,3 +62,10 @@ export default function GlobalFeed() {
       </div>
    )
 }
+
+GlobalFeed.propTypes = {
+   location: PropTypes.object.isRequired,
+   match: PropTypes.object.isRequired
+}
+
+export default GlobalFeed
