@@ -7,6 +7,7 @@ import { LIMIT } from '@/constants'
 import Loader from '@com/Loader'
 import Feed from '@com/Feed'
 import Pagination from '@com/Pagination'
+import PopularTags from '@com/PopularTags'
 
 type Props = {
    location: {
@@ -41,8 +42,7 @@ const GlobalFeed: React.FC<Props> = ({ location, match }) => {
             <div className="row">
                <div className="col-md-9">
                   {isLoading && <Loader />}
-                  {error && <div>Something went wrong</div>}
-                  {!isLoading && response && (
+                  {response && (
                      <>
                         <Feed articles={response.articles} />
                         <Pagination
@@ -53,9 +53,10 @@ const GlobalFeed: React.FC<Props> = ({ location, match }) => {
                         />
                      </>
                   )}
+                  {error && <div>Something went wrong</div>}
                </div>
                <div className="col-md-3">
-                  Popular tags
+                  <PopularTags />
                </div>
             </div>
          </div>
