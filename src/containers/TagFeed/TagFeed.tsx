@@ -16,20 +16,26 @@ type Props = {
    }
    match: {
       url: string
+      params: {
+         slug: string
+      }
    }
 }
 
-const GlobalFeed: React.FC<Props> = ({ location, match }) => {
+const TagFeed: React.FC<Props> = ({ location, match }) => {
    const { offset, currentPage } = getPaginator(location.search)
+   const tagName = match.params.slug
    const stringifiedParams = stringify({
-      LIMIT, offset
+      LIMIT,
+      offset,
+      tag: tagName
    })
    const apiUrl = `articles?${stringifiedParams}`
    const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
    
    useEffect(() => {
       doFetch()
-   }, [doFetch, currentPage])
+   }, [doFetch, currentPage, tagName])
 
    return (
       <div className="home-page">
@@ -42,7 +48,7 @@ const GlobalFeed: React.FC<Props> = ({ location, match }) => {
          <div className="container page">
             <div className="row">
                <div className="col-md-9">
-                  <FeedToggler />
+                  <FeedToggler tagName={tagName} />
                   {isLoading && <Loader />}
                   {response && (
                      <>
@@ -66,9 +72,9 @@ const GlobalFeed: React.FC<Props> = ({ location, match }) => {
    )
 }
 
-GlobalFeed.propTypes = {
+TagFeed.propTypes = {
    location: PropTypes.object.isRequired,
    match: PropTypes.object.isRequired
 }
 
-export default GlobalFeed
+export default TagFeed

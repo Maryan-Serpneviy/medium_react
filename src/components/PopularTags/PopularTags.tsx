@@ -20,7 +20,7 @@ export default function PopularTags() {
             <div className="tag-list">
                {response.tags.map((tag: string) => (
                   <Link
-                     to={`tags/${tag}`}
+                     to={`/tags/${tag}`}
                      className="tag-default tag-pill"
                      key={tag}
                   >
