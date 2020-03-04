@@ -28,7 +28,7 @@ export default function Auth(props: Props) {
    const [submitted, setSubmitted] = useState<boolean>(false)
    const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
    const [, setToken] = useLocalStorage<string>(TOKEN_KEY)
-   const [currentUserState, setCurrentUserState] = useContext(CurrentUserContext)
+   const [, setCurrentUserState] = useContext(CurrentUserContext)
 
    const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault()
@@ -48,7 +48,7 @@ export default function Auth(props: Props) {
       setSubmitted(true)
       setCurrentUserState((state: CurrentUserStateType) => ({
          ...state,
-         isLogggedIn: true,
+         isLoggedIn: true,
          isLoading: false,
          currentUser: response.user
       }))

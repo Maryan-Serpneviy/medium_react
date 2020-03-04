@@ -1,0 +1,17 @@
+$link-color: rgb(189, 189, 189);
+
+.navigation {
+   a {
+      color: $link-color;
+      font-size: 18px;
+
+      &:hover {
+         color: darken($link-color, 25);
+         transition: color 0.4s ease;
+      }
+   }
+}
+
+.active {
+   color: darken($link-color, 40) !important;
+}

@@ -7,7 +7,7 @@ export const CurrentUserContext = createContext([{}, () => {
 
 export type CurrentUserStateType = {
    isLoading: boolean
-   isLogggedIn: null | object
+   isLoggedIn: boolean
    currentUser: null | object
 }
 
@@ -19,7 +19,7 @@ export function CurrentUserProvider({ children }: Props) {
 
    const initialState: CurrentUserStateType = {
       isLoading: false,
-      isLogggedIn: null,
+      isLoggedIn: false,
       currentUser: null
    }
 

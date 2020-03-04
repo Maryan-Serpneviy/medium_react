@@ -18,7 +18,7 @@ export default function CurrentUserChecker({ children }: Props) {
       if (!token) {
          setCurrentUserState((state: CurrentUserStateType) => ({
             ...state,
-            isLogggedIn: false
+            isLoggedIn: false
          }))
          return
       }
@@ -37,7 +37,7 @@ export default function CurrentUserChecker({ children }: Props) {
 
       setCurrentUserState((state: CurrentUserStateType) => ({
          ...state,
-         isLogggedIn: true,
+         isLoggedIn: true,
          isLoading: false,
          currentUser: response.user
       }))
