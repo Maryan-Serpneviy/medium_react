@@ -6,7 +6,7 @@ type Props = {
    className?: string
    disabled?: boolean
    type?: string
-   onClick: () => void
+   onClick?: () => void
    children: JSX.Element[] | JSX.Element
 }
 
@@ -40,7 +40,7 @@ Button.propTypes = {
    className: PropTypes.string,
    type: PropTypes.string,
    disabled: PropTypes.bool,
-   onClick: PropTypes.func.isRequired
+   onClick: PropTypes.func
 }
 
 export default Button

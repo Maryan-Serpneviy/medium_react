@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import GlobalFeed from './containers/GlobalFeed'
+import YourFeed from './containers/YourFeed'
 import TagFeed from './containers/TagFeed'
 import Auth from './containers/Auth'
 import Article from './containers/Article'
@@ -9,6 +10,7 @@ export default function Routes() {
    return (
       <Switch>
          <Route path="/" component={GlobalFeed} exact />
+         <Route path="/feed" component={YourFeed} />
          <Route path="/tags/:slug" component={TagFeed} />
          <Route path="/login" component={Auth} />
          <Route path="/register" component={Auth} />

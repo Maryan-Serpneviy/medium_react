@@ -1,20 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import PropTypes, { InferProps } from 'prop-types'
+import { CurrentUserContext } from '@/context/currentUser'
 
 type Props = {
-   tagName: string
+   tagName?: string
 }
 
 const FeedToggler: React.FC<Props> = ({ tagName }: InferProps<typeof FeedToggler.propTypes>) => {
+   const [currentUserState] = useContext(CurrentUserContext)
    return (
       <div className="feed-toggle">
          <ul className="nav nav-pills outline-active">
-            <li className="nav-item">
-               <NavLink to="/feed" className="nav-link">
-                  Your feed
-               </NavLink>
-            </li>
+            {currentUserState.isLoggedIn && (
+               <li className="nav-item">
+                  <NavLink to="/feed" className="nav-link">
+                     Your feed
+                  </NavLink>
+               </li>
+            )}
             <li className="nav-item">
                <NavLink to="/" className="nav-link" exact>
                   Global feed
@@ -34,7 +38,7 @@ const FeedToggler: React.FC<Props> = ({ tagName }: InferProps<typeof FeedToggler
 }
 
 FeedToggler.propTypes = {
-   tagName: PropTypes.string.isRequired
+   tagName: PropTypes.string
 }
 
 export default FeedToggler
