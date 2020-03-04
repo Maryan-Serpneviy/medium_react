@@ -4,7 +4,7 @@ import GlobalFeed from './containers/globalFeed'
 import Auth from './containers/auth'
 import Article from './containers/article'
 
-export default () => {
+export default function Routes() {
    return (
       <Switch>
          <Route path="/" component={GlobalFeed} exact />

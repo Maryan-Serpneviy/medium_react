@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react'
+import PropTypes from 'prop-types'
 
 export const CurrentUserContext = createContext([{}, () => {
    //
@@ -10,7 +11,12 @@ export type CurrentUserStateType = {
    currentUser: null | object
 }
 
-export function CurrentUserProvider({ children }) {
+type Props = {
+   children: JSX.Element | JSX.Element[]
+}
+
+export function CurrentUserProvider({ children }: Props) {
+
    const initialState: CurrentUserStateType = {
       isLoading: false,
       isLogggedIn: null,
@@ -24,4 +30,11 @@ export function CurrentUserProvider({ children }) {
          {children}
       </CurrentUserContext.Provider>
    )
+}
+
+CurrentUserProvider.propTypes = {
+   children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+  ]).isRequired
 }

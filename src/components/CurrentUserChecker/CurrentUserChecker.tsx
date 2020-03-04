@@ -1,4 +1,5 @@
-import React, { useEffect, useContext } from 'react'
+import { useEffect, useContext } from 'react'
+import PropTypes from 'prop-types'
 import { useFetch } from '@/hooks/useFetch'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { CurrentUserContext, CurrentUserStateType } from '@/context/currentUser'
@@ -27,7 +28,7 @@ export default function CurrentUserChecker({ children }: Props) {
          ...state,
          isLoading: true
       }))
-   }, [])
+   }, [token, setCurrentUserState])
 
    useEffect(() => {
       if (!response) {
@@ -43,4 +44,11 @@ export default function CurrentUserChecker({ children }: Props) {
    }, [response, setCurrentUserState])
 
    return children
+}
+
+CurrentUserChecker.propTypes = {
+   children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+  ]).isRequired
 }
