@@ -15,7 +15,8 @@
 		"sourceType": "module"
 	},
 	"plugins": [
-		"@typescript-eslint/eslint-plugin"
+		"@typescript-eslint/eslint-plugin",
+		"react-hooks"
 	],
 	"rules": {
 		"accessor-pairs": "error",
@@ -153,6 +154,8 @@
 		"react/jsx-no-useless-fragment": "error",
 		"react/jsx-pascal-case": "error",
 		"react/jsx-props-no-multi-spaces": "error",
-		"react/jsx-uses-react": "error"
+		"react/jsx-uses-react": "error",
+		"react-hooks/rules-of-hooks": "error",
+    	"react-hooks/exhaustive-deps": "warn"
 	}
 }
