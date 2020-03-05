@@ -1,9 +1,11 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useReducer } from 'react'
 import PropTypes from 'prop-types'
 
-export const CurrentUserContext = createContext([{}, () => {
-   //
-}])
+const initialState: CurrentUserStateType = {
+   isLoading: false,
+   isLoggedIn: false,
+   currentUser: null
+}
 
 export type CurrentUserStateType = {
    isLoading: boolean
@@ -11,25 +13,43 @@ export type CurrentUserStateType = {
    currentUser: null | object
 }
 
-type Props = {
-   children: JSX.Element | JSX.Element[]
+function reducer(state = initialState, action) {
+   switch (action.type) {
+      case 'LOADING':
+         return {
+            ...state,
+            isLoading: true
+         }
+      case 'SET_AUTHORIZED':
+         return {
+            ...state,
+            isLoggedIn: true,
+            isLoading: false,
+            currentUser: action.payload
+         }
+      case 'SET_UNAUTHORIZED':
+         return {
+            ...state,
+            isLoggedIn: false
+         }
+      default:
+         return state
+   }
 }
 
 export function CurrentUserProvider({ children }: Props) {
-
-   const initialState: CurrentUserStateType = {
-      isLoading: false,
-      isLoggedIn: false,
-      currentUser: null
-   }
-
-   const [state, setState] = useState(initialState)
+   //const [state, setState] = useState(initialState)
+   const value = useReducer(reducer, initialState)
 
    return (
-      <CurrentUserContext.Provider value={[state, setState]}>
+      <CurrentUserContext.Provider value={value}>
          {children}
       </CurrentUserContext.Provider>
    )
+}
+
+type Props = {
+   children: JSX.Element | JSX.Element[]
 }
 
 CurrentUserProvider.propTypes = {
@@ -38,3 +58,5 @@ CurrentUserProvider.propTypes = {
       PropTypes.node
   ]).isRequired
 }
+
+export const CurrentUserContext = createContext()
