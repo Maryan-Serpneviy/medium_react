@@ -6,7 +6,7 @@ type Props = {
    className?: string
    disabled?: boolean
    type?: string
-   onClick?: () => void
+   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
    children: JSX.Element[] | JSX.Element
 }
 

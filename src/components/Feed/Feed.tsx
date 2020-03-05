@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes, { InferProps } from 'prop-types'
 import { Link } from 'react-router-dom'
 import TagList from '../TagList'
+import AddToFavorites from '../AddToFavorites'
 import classes from './Feed.module.scss'
 
 type Props = {
@@ -14,10 +15,12 @@ type Article = {
       image: string
    }
    createdAt: string
+   description: string
+   favorited: boolean
+   favoritesCount: number
    slug: string
    title: string
-   description: string
-   tagList: string[]
+   tagList: [] | string[]
 }
 
 const GlobalFeed: React.FC<Props> = ({ articles }: InferProps<typeof GlobalFeed.propTypes>) => {
@@ -37,6 +40,13 @@ const GlobalFeed: React.FC<Props> = ({ articles }: InferProps<typeof GlobalFeed.
                         {article.author.username}
                      </Link>
                      <span className="date">{article.createdAt}</span>
+                  </div>
+                  <div className="pull-xs-right">
+                     <AddToFavorites
+                        isFavorited={article.favorited}
+                        favoritesCount={article.favoritesCount}
+                        articleSlug={article.slug}
+                     />
                   </div>
                </div>
                <Link
