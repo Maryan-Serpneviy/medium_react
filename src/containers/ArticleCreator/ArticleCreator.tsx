@@ -7,7 +7,7 @@ import { CurrentUserContext } from '../../context/currentUser'
 export default function ArticleCreator() {
    const apiUrl = 'articles'
    const [{ response, error }, doFetch] = useFetch(apiUrl)
-   const [submitted, setSubmitted] = useState(false)
+   const [submitted, setSubmitted] = useState<boolean>(false)
    const [currentUserState] = useContext(CurrentUserContext)
 
    const initValues = {
