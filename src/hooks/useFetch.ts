@@ -19,6 +19,7 @@ export function useFetch(url: string) {
    }, [])
 
    useEffect(() => {
+      let skipResponseAfterUnmount: boolean = false
       const requestOptions = {
          ...options,
          ...{
@@ -32,14 +33,22 @@ export function useFetch(url: string) {
       }
       Axios(BASE_URL + url, requestOptions)
       .then(response => {
-         setIsLoading(false)
-         setResponse(response.data)
+         if (!skipResponseAfterUnmount) {
+            setIsLoading(false)
+            setResponse(response.data)
+         }
       })
       .catch(error => {
-         setIsLoading(false)
-         setError(error.response.data)
+         if (!skipResponseAfterUnmount) {
+            setIsLoading(false)
+            setError(error.response.data)
+         }
          console.error(error)
       })
+
+      return () => {
+         skipResponseAfterUnmount = true
+      }
    }, [isLoading, options, token, url])
 
    return [{ isLoading, response, error }, doFetch]
