@@ -43,6 +43,7 @@ const AddToFavorites: React.FC<Props> = (
       <Button
          onClick={handleLike}
          className={buttonClasses}
+         style={{ color: 'white' }}
       >
          <i className="ion-heart" />
          <span>

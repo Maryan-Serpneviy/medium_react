@@ -8,11 +8,14 @@ import Article from './containers/Article'
 import ArticleCreator from './containers/ArticleCreator'
 import ArticleEditor from './containers/ArticleEditor'
 import Settings from './containers/Settings'
+import Profile from './containers/Profile'
 
 export default function Routes() {
    return (
       <Switch>
          <Route path="/" component={GlobalFeed} exact />
+         <Route path="/profiles/:slug" component={Profile} />
+         <Route path="/profiles/:slug/favorites" component={Profile} />
          <Route path="/settings" component={Settings} />
          <Route path="/articles/new" component={ArticleCreator} />
          <Route path="/articles/:slug/edit" component={ArticleEditor} />

@@ -4,30 +4,32 @@ import classes from './Button.module.scss'
 
 type Props = {
    className?: string
-   disabled?: boolean
    type?: string
+   style?: object
+   disabled?: boolean
    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
    children: JSX.Element[] | JSX.Element
 }
 
 const Button: React.FC<Props> = (
-   { className, type, disabled, onClick, children, ...props }
+   { className, disabled, onClick, children, ...props }
    : InferProps<typeof Button.propTypes>) => {
 
-   let style = [classes.button]
+   let styles = [classes.button]
    if (disabled) {
-      style.push(classes.disabled)
+      styles.push(classes.disabled)
    }
-   if (type && !disabled) {
-      style.push(type)
+   if (props.type && !disabled) {
+      styles.push(props.type)
    }
    if (className && !disabled) {
-      style = [...style, ...className.split(' ')]
+      styles = [...styles, ...className.split(' ')]
    }
 
    return (
       <button
-         className={style.join(' ')}
+         className={styles.join(' ')}
+         style={props.style || null}
          onClick={onClick}
          disabled={disabled}
       >
@@ -39,6 +41,7 @@ const Button: React.FC<Props> = (
 Button.propTypes = {
    className: PropTypes.string,
    type: PropTypes.string,
+   style: PropTypes.object,
    disabled: PropTypes.bool,
    onClick: PropTypes.func
 }
