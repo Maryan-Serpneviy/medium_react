@@ -1,9 +1,69 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { useFetch } from '@/hooks/useFetch'
+import Loader from '@com/Loader'
+import TagList from '@com/TagList'
 
-export default function Article() {
+type Props = {
+   match: {
+      params: {
+         slug: string
+      }
+   }
+}
+
+const Article: React.FC<Props> = ({ match }) => {
+   const { slug } = match.params
+   const apiUrl = `articles/${slug}`
+   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl)
+
+   useEffect(() => {
+      doFetch()
+   }, [doFetch])
+
    return (
-      <div>
-         Article
+      <div className="article-page">
+         <div className="banner">
+            {response && (
+               <div className="container">
+                  <h1>{response.article.title}</h1>
+                  <div className="article-meta">
+                     <Link to={`/profiles/${response.article.author.username}`}>
+                        <img src={response.article.author.image} alt=""/>
+                     </Link>
+                     <div className="info">
+                        <Link to={`/profiles/${response.article.author.username}`}>
+                           {response.article.author.username}
+                        </Link>
+                        <span className="date">{response.article.createdAt}</span>
+                     </div>
+                  </div>
+               </div>
+            )}
+         </div>
+         <div className="container page">
+            {isLoading && <Loader />}
+            {response && (
+               <div className="row article-content">
+                  <div className="col-xs-12">
+                     <div>
+                        <p>
+                           {response.article.body}
+                        </p>
+                     </div>
+                     <TagList tags={response.article.tagList} />
+                  </div>
+               </div>
+            )}
+            {error && <div>Something went wrong</div>}
+         </div>
       </div>
    )
 }
+
+Article.propTypes = {
+   match: PropTypes.object.isRequired
+}
+
+export default Article

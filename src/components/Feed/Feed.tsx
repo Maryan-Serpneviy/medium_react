@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes, { InferProps } from 'prop-types'
 import { Link } from 'react-router-dom'
+import TagList from '../TagList'
 import classes from './Feed.module.scss'
 
 type Props = {
@@ -45,13 +46,7 @@ const GlobalFeed: React.FC<Props> = ({ articles }: InferProps<typeof GlobalFeed.
                   <h1>{article.title}</h1>
                   <p>{article.description}</p>
                   <span>Read more...</span>
-                  <ul className="tag-list">
-                     {article.tagList.map(tag => (
-                        <li key={tag} className="tag-default tag-pill tag-outline">
-                           {tag}
-                        </li>
-                     ))}
-                  </ul>
+                  <TagList tags={article.tagList} />
                </Link>
             </div>
          ))}
