@@ -50,7 +50,7 @@ export default function Header() {
                         >
                            <i className="ion-compose"></i>
                            &nbsp;
-                           New Post
+                           New Article
                         </NavLink>
                      </li>
                      <li className="nav-item">
