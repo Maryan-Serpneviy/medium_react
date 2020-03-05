@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { useFetch } from '@/hooks/useFetch'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
-import { CurrentUserContext, CurrentUserStateType } from '@/context/currentUser'
+import { CurrentUserContext } from '@/context/currentUser'
+import * as Action from '@/context/actions/currentUser'
 import { TOKEN_KEY } from '@/constants'
 import BackendErrorMessages from '@com/BackendErrorMessages'
 import Input from '@com/Input'
@@ -16,11 +17,11 @@ type Props = {
 }
 
 export default function Auth(props: Props) {
-   const isLogin = props.match.path === '/login'
-   const pageTitle = isLogin ? 'Sign in' : 'Sign up'
-   const descriptionLink = isLogin ? '/register' : '/login'
-   const descriptionText = isLogin ? 'Need an account?' : 'Have an account?'
-   const apiUrl = isLogin ? 'users/login' : 'users'
+   const isLogin: boolean = props.match.path === '/login'
+   const pageTitle: string = isLogin ? 'Sign in' : 'Sign up'
+   const descriptionLink: string = isLogin ? '/register' : '/login'
+   const descriptionText: string = isLogin ? 'Need an account?' : 'Have an account?'
+   const apiUrl: string = isLogin ? 'users/login' : 'users'
 
    const [email, setEmail] = useState<string>('')
    const [password, setPassword] = useState<string>('')
@@ -33,7 +34,7 @@ export default function Auth(props: Props) {
    const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault()
 
-      const user = isLogin ? { email, password } : { email, password, username }
+      const user: object = isLogin ? { email, password } : { email, password, username }
       doFetch({
          method: 'POST',
          data: { user }
@@ -46,10 +47,8 @@ export default function Auth(props: Props) {
       }
       setToken(response.user.token)
       setSubmitted(true)
-      dispatch({
-         type: 'SET_AUTHORIZED',
-         payload: response.user
-      })
+      dispatch(Action.setAuthorized(response.user))
+
    }, [response, setToken, dispatch])
 
    if (submitted) {

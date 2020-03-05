@@ -2,7 +2,8 @@ import { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { useFetch } from '@/hooks/useFetch'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
-import { CurrentUserContext, CurrentUserStateType } from '@/context/currentUser'
+import { CurrentUserContext } from '@/context/currentUser'
+import * as Action from '@/context/actions/currentUser'
 import { TOKEN_KEY } from '@/constants'
 
 type Props = {
@@ -16,25 +17,19 @@ export default function CurrentUserChecker({ children }: Props) {
 
    useEffect(() => {
       if (!token) {
-         dispatch({
-            type: 'SET_UNAUTHORIZED'
-         })
+         dispatch(Action.setUnauthorized())
          return
       }
       doFetch()
-      dispatch({
-         type: 'LOADING'
-      })
+      dispatch(Action.setLoading())
    }, [token, dispatch, doFetch])
 
    useEffect(() => {
       if (!response) {
          return
       }
-      dispatch({
-         type: 'SET_AUTHORIZED',
-         payload: response.user
-      })
+      dispatch(Action.setAuthorized(response.user))
+
    }, [response, dispatch])
 
    return children
