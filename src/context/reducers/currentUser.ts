@@ -27,6 +27,10 @@ export default function currentUserReducer (state = initialState, action: Action
             ...state,
             isLoggedIn: false
          }
+      case Actions.LOGOUT:
+         return {
+            ...initialState
+         }
       default:
          return state
    }

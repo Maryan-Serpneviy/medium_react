@@ -12,4 +12,7 @@ export const setAuthorized = (payload: object): SetAuthorizedType => ({
 type SetUnauthorizedType = { type: typeof Types.SET_UNAUTHORIZED }
 export const setUnauthorized = (): SetUnauthorizedType => ({ type: Types.SET_UNAUTHORIZED })
 
-export type ActionsTypes = SetLoadingType | SetAuthorizedType | SetUnauthorizedType
+type LogoutUserType = { type: typeof Types.LOGOUT }
+export const logoutUser = (): LogoutUserType => ({ type: Types.LOGOUT })
+
+export type ActionsTypes = SetLoadingType | SetAuthorizedType | SetUnauthorizedType | LogoutUserType

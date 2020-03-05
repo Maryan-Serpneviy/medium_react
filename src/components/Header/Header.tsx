@@ -53,6 +53,19 @@ export default function Header() {
                            New Article
                         </NavLink>
                      </li>
+
+                     <li className="nav-item">
+                        <NavLink
+                           to="/settings"
+                           className="nav-link"
+                           activeClassName={classes.active}
+                        >
+                           <i className="ion-gear-a"></i>
+                           &nbsp;
+                           Settings
+                        </NavLink>
+                     </li>
+
                      <li className="nav-item">
                         <NavLink
                            to={`/profiles/${currentUser.username}`}
